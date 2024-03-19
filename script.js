@@ -49,7 +49,7 @@ function getNewHit() {
 
 
 function runtimer() {
-    let time = 10;
+    let time = 60;
     let clearEvent = setInterval(function () {
         document.getElementById("timer").innerText = time;
         if (time == 0) {
