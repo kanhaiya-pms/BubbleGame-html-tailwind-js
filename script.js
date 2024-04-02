@@ -1,5 +1,6 @@
 var targetrndm;
-
+var click = 1;
+var currentTime =60;
 
 let body = document.getElementById('body')
 let gameover = document.getElementById('gameover')
@@ -7,13 +8,40 @@ let showScore = document.getElementById('showScore')
 let Restart = document.getElementById('Restart')
 let target = document.getElementById('target')
 let networkStatus = document.getElementById('networkStatus')
-
+let switchlevel = document.getElementById('switchlevel')
+var level = 10;
 var score = 0;
 
 
-window.addEventListener('offline', function () {
-    networkStatus.style.display = 'block';
+
+
+
+
+
+let pauseButton = document.getElementById('pause');
+let resumeButton = document.getElementById('resume');
+let paused = false;
+let timerInterval;
+
+
+
+switchlevel.addEventListener("click", function () {
+    if (click == 2) {
+        alert("this is last stage")
+
+    }
+    else {
+        level *= 10;
+        startGame();
+        click++;
+    }
+
 })
+
+
+
+
+
 
 
 
@@ -26,12 +54,11 @@ function increaseScore() {
     document.getElementById("score").innerHTML = score;
 }
 
-
 function makebobble() {
     var clattur = ''
 
     for (let i = 0; i < 216; i++) {
-        rn = Math.floor(Math.random() * 10);
+        rn = Math.floor(Math.random() * level);
         clattur += `<div id="box" class="bg-[#149b5e] hover:bg-[#1a6647] h-7 w-7 rounded-full flex justify-center items-center text-sm font-semibold cursor-pointer">${rn}</div>`;
 
     }
@@ -40,16 +67,13 @@ function makebobble() {
 
 }
 
-
-
 function getNewHit() {
-    targetrndm = Math.floor(Math.random() * 10);
+    targetrndm = Math.floor(Math.random() * level);
     target.innerText = targetrndm
 }
 
-
 function runtimer() {
-    let time = 60;
+    let time = currentTime;
     let clearEvent = setInterval(function () {
         document.getElementById("timer").innerText = time;
         if (time == 0) {
@@ -59,7 +83,7 @@ function runtimer() {
             showScore.innerText = `Your score :  ${score}`;
             target.innerText = 0;
             // score = 0;
-            document.getElementById("score").innerHTML =  '0';
+            document.getElementById("score").innerHTML = '0';
 
             Restart.addEventListener('click', function () {
                 gameover.style.display = "none";
@@ -73,39 +97,60 @@ function runtimer() {
         }
         time--
     }, 1000)
+    pauseButton.addEventListener('click', function () {
+        if (!paused) {
+            clearInterval(clearEvent);
+            paused =  true;
+        }
+    });
+    
+    resumeButton.addEventListener('click', function () {
+        if (paused) {
+            runtimer();
+            paused = false;
+        }
+    });
 
 
 }
 
-
-body.addEventListener('click', function (dets) {
-    let match = dets.target.textContent
-    console.log(match);
-    if (targetrndm == match) {
-        increaseScore()
-        makebobble();
-        getNewHit();
+function startGame() {
 
 
-    }
-    else {
-        console.log("false");
-        makebobble();
-        getNewHit();
-
-    }
-})
+    runtimer()
+    makebobble();
+    getNewHit();
 
 
 
+    body.addEventListener('click', function (dets) {
+        let match = dets.target.textContent
+        console.log(match);
+        if (targetrndm == match) {
+            increaseScore()
+            makebobble();
+            getNewHit();
+
+
+        }
+        else {
+            console.log("false");
+            makebobble();
+            getNewHit();
+
+        }
+    })
+}
+
+
+startGame()
 
 
 
 
 
-runtimer()
-makebobble();
 
-getNewHit();
+
+
 
 

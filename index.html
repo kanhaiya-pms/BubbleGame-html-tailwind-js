@@ -16,39 +16,50 @@
 </head>
 
 <body>
-    <div class="bg-green-400 h-[100vh] w-full flex justify-center items-center text-white font-mono">
+    <div class="bg-green-400 h-[100vh] w-full flex justify-center items-center text-white font-mono relative">
 
         <div class="screen w-[80vw] bg-white h-[80vh] rounded overflow-hidden">
             <!-- box header  -->
-            <div class="bg-[#1c653b] h-[12vh] w-full flex justify-center items-center gap-16">
+            <div class="bg-[#1c653b] h-[12vh] w-full flex justify-center sm:gap-16 items-center gap-0">
                 <div class="flex ">
                     <p class="font-semibold">Target</p>
-                    <span id='target' class="h-5 w-5 ml-3 bg-white rounded text-black font-semibold flex justify-center items-center p-3 text-sm">0</span>
+                    <span id='target'
+                        class="h-5 w-5 ml-3 bg-white rounded text-black font-semibold flex justify-center items-center p-3 text-sm">0</span>
                 </div>
                 <div class="flex ">
                     <p class="font-semibold">Timer</p>
-                    <span id='timer' class="h-5 min-w-5 ml-3 bg-white rounded text-black font-semibold flex justify-center items-center p-3 text-sm"></span>
+                    <span id='timer'
+                        class="h-5 min-w-5 ml-3 bg-white rounded text-black font-semibold flex justify-center items-center p-3 text-sm"></span>
                 </div>
                 <div class="flex ">
                     <p class="font-semibold">Score</p>
-                    <span id='score' class="h-5 w-5 ml-3 bg-white rounded text-black font-semibold flex justify-center items-center p-3 text-sm">0</span>
+                    <span id='score'
+                        class="h-5 w-5 ml-3 bg-white rounded text-black font-semibold flex justify-center items-center p-3 text-sm">0</span>
                 </div>
+                <button id="switchlevel"
+                    class="absolute top-0  bg-green-700 hover:bg-blue-700 text-white font-xs py-1 px-3 rounded">
+                    Increase-level
+                </button>
+                <button id="pause">Pause</button>
+                <button id="resume">Resume</button>
+
             </div>
             <!-- box body  -->
             <div id="body" class="h-[68vh] p-2 flex gap-1 flex-wrap ">
-                
+
                 <!-- <div id="targetNum" class="bg-[#149b5e] hover:bg-[#1a6647] h-7 w-7 rounded-full flex justify-center items-center text-sm font-semibold cursor-pointer">0</div> -->
-               
+
             </div>
             <div id="gameover" class="h-[68vh] p-2 flex gap-1 justify-center items-center flex-col none">
-                        <div class="text-black text-3xl font-semibold">Time over...</div> 
-                        <div id="showScore" class="text-black"></div>
-                        <button id="Restart" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transform transition-transform scale-100 hover:scale-105">
-                            Restart
-                        </button>     
+                <div class="text-black text-3xl font-semibold">Time over...</div>
+                <div id="showScore" class="text-black"></div>
+                <button id="Restart"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transform transition-transform scale-100 hover:scale-105">
+                    Restart
+                </button>
             </div>
             <div id="networkStatus" class="h-[68vh] p-2 flex gap-1 justify-center items-center flex-col none">
-                        <div class="text-black text-3xl font-semibold">Network intrept...</div>      
+                <div class="text-black text-3xl font-semibold">Network intrept...</div>
             </div>
 
         </div>
