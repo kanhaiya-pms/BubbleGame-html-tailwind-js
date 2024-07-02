@@ -1,6 +1,8 @@
 var targetrndm;
 var click = 1;
-var currentTime =60;
+var currentTime =15;
+var color
+var puaseTime
 
 let body = document.getElementById('body')
 let gameover = document.getElementById('gameover')
@@ -22,6 +24,7 @@ let pauseButton = document.getElementById('pause');
 let resumeButton = document.getElementById('resume');
 let paused = false;
 let timerInterval;
+var clearEvent
 
 
 
@@ -32,7 +35,9 @@ switchlevel.addEventListener("click", function () {
     }
     else {
         level *= 10;
-        startGame();
+
+        over()
+
         click++;
     }
 
@@ -44,7 +49,14 @@ switchlevel.addEventListener("click", function () {
 
 
 
-
+function randomColor() {
+    const letters = '0123456789ABCDEF';
+    color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
 
 
@@ -58,8 +70,10 @@ function makebobble() {
     var clattur = ''
 
     for (let i = 0; i < 216; i++) {
+        // console.log(color);
+        randomColor();
         rn = Math.floor(Math.random() * level);
-        clattur += `<div id="box" class="bg-[#149b5e] hover:bg-[#1a6647] h-7 w-7 rounded-full flex justify-center items-center text-sm font-semibold cursor-pointer">${rn}</div>`;
+        clattur += `<div id="box" class="bg-[${color}] hover:bg-[#1a6647] h-7 w-7 rounded-full flex justify-center items-center text-sm font-semibold cursor-pointer">${rn}</div>`;
 
     }
 
@@ -67,17 +81,8 @@ function makebobble() {
 
 }
 
-function getNewHit() {
-    targetrndm = Math.floor(Math.random() * level);
-    target.innerText = targetrndm
-}
-
-function runtimer() {
-    let time = currentTime;
-    let clearEvent = setInterval(function () {
-        document.getElementById("timer").innerText = time;
-        if (time == 0) {
-            clearTimeout(clearEvent);
+function over(){
+    clearTimeout(clearEvent);
             body.style.display = "none";
             gameover.style.display = "";
             showScore.innerText = `Your score :  ${score}`;
@@ -89,30 +94,20 @@ function runtimer() {
                 gameover.style.display = "none";
                 body.style.display = "";
                 score = 0;
-                runtimer();
-                makebobble();
-                getNewHit();
+                // runtimer();
+                // makebobble();
+                // getNewHit();
+                startGame()
                 // increaseScore();
             })
-        }
-        time--
-    }, 1000)
-    pauseButton.addEventListener('click', function () {
-        if (!paused) {
-            clearInterval(clearEvent);
-            paused =  true;
-        }
-    });
-    
-    resumeButton.addEventListener('click', function () {
-        if (paused) {
-            runtimer();
-            paused = false;
-        }
-    });
-
-
 }
+
+function getNewHit() {
+    targetrndm = Math.floor(Math.random() * level);
+    target.innerText = targetrndm
+}
+
+
 
 function startGame() {
 
@@ -140,6 +135,41 @@ function startGame() {
 
         }
     })
+}
+
+
+function runtimer() {
+    let time = currentTime;
+    clearEvent = setInterval(function () {
+         console.log("runtimer------",time);
+        document.getElementById("timer").innerText = time;
+        if (time == 0) {
+            clearInterval(clearEvent)
+            over()
+        }
+        time--
+    }, 1000)
+    pauseButton.addEventListener('click', function () {
+        if (!paused) {
+            // clearInterval(clearEvent);
+            puaseTime = time
+            console.log(puaseTime);
+            paused =  true;
+            over()
+        }
+    });
+    
+    resumeButton.addEventListener('click', function () {
+        if (paused) {
+            // runtimer();
+            currentTime = puaseTime +1;
+            // console.log("Resume time:--" ,currentTime);
+            startGame()
+            paused = false;
+        }
+    });
+
+
 }
 
 
